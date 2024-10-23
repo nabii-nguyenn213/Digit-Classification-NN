@@ -49,7 +49,7 @@ def fit(lr = 0.01, batch_size = 64, epochs = 1000):
     y_train_one_hot.index = y_train
     
     N, d = x_train.shape
-    for it in tqdm(range(epochs)):
+    for it in tqdm(range(epochs), desc='Epochs', ascii=True):
         rand_id = np.random.choice(N, size=batch_size, replace=False)
         for i in rand_id:
             xi = np.array([x_train.iloc[i, :]]).T
