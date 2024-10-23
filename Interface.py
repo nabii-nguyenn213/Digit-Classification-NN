@@ -65,8 +65,8 @@ class PygameInterface:
                     if (14 < self.mouse_x < 686) and (14 < self.mouse_y < 686):
                         self.draw()
                         self.board.fill_board(self.coor)
-                        self.board.print_board()
-                        print()
+                        # self.board.print_board()
+                        # print()
         
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if (870 <= self.mouse_x <= 970) and (640 <= self.mouse_y <= 670):
@@ -137,7 +137,7 @@ class PygameInterface:
 training
 '''
 print("waiting training process...")
-fit()
+fit(lr = 0.001, batch_size=32, epochs=10000)
 print("training done!")
 
 window = PygameInterface()
