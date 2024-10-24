@@ -63,6 +63,15 @@ def fit(lr = 0.01, batch_size = 64, epochs = 1000):
     acc = model.accuracy(y_train, y_pred)
     print("accuracy :", acc)
 
+def get_weights_bias():
+    weight = np.load('weights.npy', allow_pickle=True)
+    bias = np.load('bias.npy', allow_pickle=True)
+    return weight, bias
+
+def save_weights_bias():
+    np.save('weights.npy', np.array(model.weights, dtype=object), allow_pickle=True)
+    np.save('bias.npy', np.array(bias, dtype=object), allow_pickle=True)
+
 def pred(x):
     y = model.predict_single_point(x)
     return y

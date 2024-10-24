@@ -75,7 +75,7 @@ class PygameInterface:
                     if (720 <= self.mouse_x <= 820) and (640 <= self.mouse_y <= 670):
                         # print('predict')
                         img = self.board.tonumpy()
-                        print(img)
+                        # print(img)
                         img = img.reshape(784, 1)
                         self.y_pred = pred(img)
                         print(self.y_pred)
@@ -133,12 +133,21 @@ class PygameInterface:
             pygame.draw.line(self.window, WHITE, (r * 24 + 14, 14), (r * 24 + 14, 686))
             pygame.draw.line(self.window, WHITE, (14, r * 24 + 14), (686, r * 24 + 14))
 
-'''
-training
-'''
-print("waiting training process...")
-fit(lr = 0.001, batch_size=32, epochs=10000)
-print("training done!")
+
+w, b = get_weights_bias()
+for i in range(model.layers_len-1):
+    model.weights[i] = w[i]
+    model.layers[i].biases = b[i]
+
+x_train, y_train = read_data()
+convert_data(x_train)
+y_train.to_numpy()
+
+
+y_predict = model.predict(x_train)
+acc = model.accuracy(y_train, y_predict)
+print('accuracy :', acc)
+
 
 window = PygameInterface()
 window.init()
