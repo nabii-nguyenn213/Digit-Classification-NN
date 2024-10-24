@@ -53,10 +53,12 @@ class PygameInterface:
         
     def run(self):
         running = True
+        predict = False
         while running:
             self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
             self.draw_grid()
             self.button()
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -69,17 +71,21 @@ class PygameInterface:
                         # print()
         
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    if predict:
+                        self.clear_board()
+                        predict = False
                     if (870 <= self.mouse_x <= 970) and (640 <= self.mouse_y <= 670):
                         # print('clear')
                         self.clear_board()
                     if (720 <= self.mouse_x <= 820) and (640 <= self.mouse_y <= 670):
                         # print('predict')
+                        predict = True
                         img = self.board.tonumpy()
                         # print(img)
                         img = img.reshape(784, 1)
                         self.y_pred = pred(img)
-                        print(self.y_pred)
-                        
+                        # print(self.y_pred)
+                         
                         
             pygame.display.flip()
     
@@ -133,22 +139,22 @@ class PygameInterface:
             pygame.draw.line(self.window, WHITE, (r * 24 + 14, 14), (r * 24 + 14, 686))
             pygame.draw.line(self.window, WHITE, (14, r * 24 + 14), (686, r * 24 + 14))
 
+if __name__ == "__main__":
+    w, b = get_weights_bias()
+    for i in range(model.layers_len-1):
+        model.weights[i] = w[i]
+        model.layers[i].biases = b[i]
 
-w, b = get_weights_bias()
-for i in range(model.layers_len-1):
-    model.weights[i] = w[i]
-    model.layers[i].biases = b[i]
-
-x_train, y_train = read_data()
-convert_data(x_train)
-y_train.to_numpy()
-
-
-y_predict = model.predict(x_train)
-acc = model.accuracy(y_train, y_predict)
-print('accuracy :', acc)
+    x_train, y_train = read_data()
+    convert_data(x_train)
+    y_train.to_numpy()
 
 
-window = PygameInterface()
-window.init()
-window.run()
+    y_predict = model.predict(x_train)
+    acc = model.accuracy(y_train, y_predict)
+    print('accuracy :', acc)
+
+
+    window = PygameInterface()
+    window.init()
+    window.run()
