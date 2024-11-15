@@ -3,3 +3,5 @@
 
 Weights and biases after training are stored in `weights.npy` and `bias.npy` files to avoid wasting time during training.
 If you want to train please empty these two files by using method in **DeepNeuralNetwork** class or just clear by yourself.
+
+Uncomment `self.empty_file()` in **initilize of DeepNeuralNetwork** class for training process
