@@ -146,34 +146,34 @@ class PygameInterface:
         font = pygame.font.SysFont('sans', 30)
         
         
-        zero = font.render('0 : ' + str(round(float(output[0]), 3)) + '%', True, BLACK)
+        zero = font.render('0 : ' + str(round(float(output[0]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(zero, (750, 250 - i))
         
-        one = font.render('1 : ' + str(round(float(output[1]), 3)) + '%', True, BLACK)
+        one = font.render('1 : ' + str(round(float(output[1]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(one, (750, 285 - i))
         
-        two = font.render('2 : ' + str(round(float(output[2]), 3)) + '%', True, BLACK)
+        two = font.render('2 : ' + str(round(float(output[2]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(two, (750, 320 - i))
         
-        three =font.render('3 : ' + str(round(float(output[3]), 3)) + '%', True, BLACK)
+        three =font.render('3 : ' + str(round(float(output[3]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(three, (750, 355 - i))
         
-        four = font.render('4 : ' + str(round(float(output[4]), 3)) + '%', True, BLACK)
+        four = font.render('4 : ' + str(round(float(output[4]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(four, (750, 390 - i))
         
-        five = font.render('5 : ' + str(round(float(output[5]), 3)) + '%', True, BLACK)
+        five = font.render('5 : ' + str(round(float(output[5]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(five, (750, 425 - i))
         
-        six = font.render('6 : ' + str(round(float(output[6]), 3)) + '%', True, BLACK)
+        six = font.render('6 : ' + str(round(float(output[6]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(six, (750, 460 - i))
         
-        seven = font.render('7 : ' + str(round(float(output[7]), 3)) + '%', True, BLACK)
+        seven = font.render('7 : ' + str(round(float(output[7]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(seven, (750, 495 - i))
         
-        eight = font.render('8 : ' + str(round(float(output[8]), 3)) + '%', True, BLACK)
+        eight = font.render('8 : ' + str(round(float(output[8]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(eight, (750, 530 - i))
         
-        nine = font.render('9 : ' + str(round(float(output[9]), 3)) + '%', True, BLACK)
+        nine = font.render('9 : ' + str(round(float(output[9]) * 100, 3)) + '%', True, BLACK)
         self.window.blit(nine, (750, 565 - i))
     
     def clear_board(self):
