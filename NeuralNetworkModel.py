@@ -9,6 +9,7 @@ class DeepNeuralNetwork:
     def __init__(self, *layers, init = 'xavier', uniform = True):
         self.layers = layers
         self.layers_len = len(layers)
+        self.empty_file() # !uncomment this to retraining
         self.get_weights_bias(init=init, uniform=uniform)
         self.dw, self.db = self.init_derivative()
     
@@ -78,10 +79,10 @@ class DeepNeuralNetwork:
                 dA = np.matmul(self.weights[l], dZ)
                 dZ = np.multiply(dA, self.layers[l].derivative(linear_cache[l-1]))
     
-    def update(self, lr = 0.01):
+    def update(self):
         for i in range(self.layers_len - 1):
-            self.weights[i] = self.weights[i] - lr * self.dw[i]
-            self.layers[i].biases = self.layers[i].biases - lr * self.db[i]
+            self.weights[i] = self.weights[i] - self.learning_rate * self.dw[i]
+            self.layers[i].biases = self.layers[i].biases - self.learning_rate * self.db[i]
     
     def predict(self, x):
         y_pred = []
@@ -123,16 +124,16 @@ class DeepNeuralNetwork:
     
     def fit(self, x_train, y_train, lr = 0.01, batch_size = 32, epochs = 1000):
         self.epochs = epochs
-        if type(lr) == int:
+        if isinstance(lr, float):
             self.learning_rate = lr
-        elif type(lr) == list:
+        elif isinstance(lr, list):
             desc_lr_epochs = self.epochs // len(lr)
             self.learning_rate = lr[0]
         N, d = x_train.shape
         self.accuracy_point = []
         y_train_one_hot = self.one_hot(y_train)
         for epoch in tqdm(range(self.epochs), desc='Epochs', ascii=True):
-            if type(lr) == list and epoch % desc_lr_epochs == 0:
+            if isinstance(lr, list) and epoch % desc_lr_epochs == 0:
                 self.learning_rate = lr[min(epoch // desc_lr_epochs, len(lr) - 1)]
             rand_id = np.random.choice(N, size=batch_size, replace=False)
             for i in rand_id:
@@ -140,7 +141,7 @@ class DeepNeuralNetwork:
                 yi = np.array([y_train_one_hot.iloc[i, :]]).T
                 activation_cache, linear_cache = self.forward(xi)
                 self.backpropagation(linear_cache, activation_cache, yi)
-                self.update(lr = lr)
+                self.update()
             if epoch % 100 == 0:
                 y_pred = self.predict(x_train)
                 self.acc = self.accuracy(y_train, y_pred)
