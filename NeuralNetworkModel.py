@@ -9,7 +9,6 @@ class DeepNeuralNetwork:
     def __init__(self, *layers, init = 'xavier', uniform = True):
         self.layers = layers
         self.layers_len = len(layers)
-        # self.empty_file() # uncomment this for retraining
         self.get_weights_bias(init=init, uniform=uniform)
         self.dw, self.db = self.init_derivative()
     

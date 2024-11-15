@@ -1,5 +1,4 @@
 import pygame
-import csv
 from NeuralNetworkModel import *
 
 #constant
@@ -75,7 +74,6 @@ class PygameInterface:
     
     def run(self):
         running = True
-        correct = True
         while running:
             self.mouse_x, self.mouse_y = pygame.mouse.get_pos()
             self.draw_grid()
@@ -96,20 +94,6 @@ class PygameInterface:
                     self.reset_draw_digit_predict()
                     if (870 <= self.mouse_x <= 970) and (640 <= self.mouse_y <= 670): # *clear button
                         self.clear_board()
-                    
-                    # if (720 <= self.mouse_x <= 820) and (640 <= self.mouse_y <= 670): # *add button
-                    #     if correct:
-                    #         label = self.y_pred
-                    #         data = self.board.tonumpy()
-                    #         data = data.reshape(1, 784)
-                    #         data = np.insert(data, 0, label)
-                    #         '''
-                    #         add data and label to train.csv
-                    #         '''
-                    #         self.new_data_to_csv(data)
-                    #         print('New data is added to csv file')
-                    #     else:
-                    #         pass
             pygame.display.flip()
     
     def button(self):
@@ -129,11 +113,6 @@ class PygameInterface:
         predict_text = font.render('predict :', True, BLACK)
         self.window.blit(predict_text, (765, 80))
         self.window.blit(predict_number, (850 , 82))
-        
-        # add_text = font.render('add', True, BLACK)
-        # pygame.draw.rect(self.window, WHITE, (720, 640, 100, 30)) # *add button
-        # self.window.blit(add_text, (735, 640))
-        
     
     def draw(self):
         col = (self.mouse_x - 14) // 24
@@ -208,8 +187,3 @@ class PygameInterface:
         for r in range(self.board.row+1):
             pygame.draw.line(self.window, WHITE, (r * 24 + 14, 14), (r * 24 + 14, 686))
             pygame.draw.line(self.window, WHITE, (14, r * 24 + 14), (686, r * 24 + 14))
-    
-    def new_data_to_csv(self, data):
-        with open('new_train.csv', 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow(data)  # Write a single row
